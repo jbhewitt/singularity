@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @person.name %>
+</p>
+
+<p>
+  <b>Gamername:</b>
+  <%= @person.gamername %>
+</p>
+
+<p>
+  <b>Meetup:</b>
+  <%= @person.meetup_id %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @person.city %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @person.state %>
+</p>
+
+<p>
+  <b>Meetup url:</b>
+  <%= @person.meetup_url %>
+</p>
+
+<p>
+  <b>Avatar:</b>
+  <%= @person.avatar %>
+</p>
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

@@ -1,0 +1,35 @@
+<h1>Listing humen</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Gamername</th>
+    <th>Meetup</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Meetup url</th>
+    <th>Avatar</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @humen.each do |human| %>
+  <tr>
+    <td><%= human.name %></td>
+    <td><%= human.gamername %></td>
+    <td><%= human.meetup_id %></td>
+    <td><%= human.city %></td>
+    <td><%= human.state %></td>
+    <td><%= human.meetup_url %></td>
+    <td><%= human.avatar %></td>
+    <td><%= link_to 'Show', human %></td>
+    <td><%= link_to 'Edit', edit_human_path(human) %></td>
+    <td><%= link_to 'Destroy', human, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Human', new_human_path %>
