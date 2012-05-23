@@ -80,4 +80,29 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def rsvpimport
+    @event = Event.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.html # rsvpimport.html.erb
+     end
+
+    RMeetup::Client.api_key = Settings.meetup_api
+    results = RMeetup::Client.fetch(:rsvps,{:event_id => @event.meetup_id })
+    results.each do |result|
+      rsvp = result.rsvp
+      person = Person.find_or_create_by_meetup_id(rsvp['member_id'])
+      person.name = rsvp['name']
+      person.city = rsvp['city']
+      person.state = rsvp['state']
+      person.meetup_url = rsvp['link']
+      person.remote_avatar_url = rsvp['photo_url']
+      ##todo
+      #person.gamername = rsvp['name']
+      #person.avatar = rsvp['photo_url']
+      person.save
+    end
+  end
+
 end

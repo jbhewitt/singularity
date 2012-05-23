@@ -15,3 +15,6 @@
 /tmp
 /public/uploads
 /config/database.yml
+config/settings.local.yml
+config/settings/*
+config/environments/*.local.yml

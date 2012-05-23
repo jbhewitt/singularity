@@ -1,0 +1,29 @@
+<h1>Listing entrants</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Response</th>
+    <th>Player</th>
+    <th>Event</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @entrants.each do |entrant| %>
+  <tr>
+    <td><%= entrant.name %></td>
+    <td><%= entrant.response %></td>
+    <td><%= entrant.person_id %></td>
+    <td><%= entrant.event_id %></td>
+    <td><%= link_to 'Show', entrant %></td>
+    <td><%= link_to 'Edit', edit_entrant_path(entrant) %></td>
+    <td><%= link_to 'Destroy', entrant, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Entrant', new_entrant_path %>

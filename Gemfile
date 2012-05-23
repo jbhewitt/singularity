@@ -11,13 +11,15 @@ gem 'chunky_png'
 gem 'barby'
 gem 'prawn'
 gem 'rqrcode_png'
-
+gem 'rMeetup'
 
 gem 'carrierwave'
 gem 'simple_form'
 gem 'mysql2'
 gem 'capistrano'
 gem 'chronic'
+gem "rails_config"
+
 
 # Gems used only for assets and not required
 # in production environments by default.

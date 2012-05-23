@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120523001536) do
+ActiveRecord::Schema.define(:version => 20120523013750) do
+
+  create_table "entrants", :force => true do |t|
+    t.string   "name"
+    t.boolean  "response"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "person_id"
+  end
+
+  add_index "entrants", ["person_id", "event_id"], :name => "by_person_and_event", :unique => true
 
   create_table "events", :force => true do |t|
     t.string   "name"

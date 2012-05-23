@@ -89,6 +89,7 @@ GEM
     prawn (0.12.0)
       pdf-reader (>= 0.9.0)
       ttfunk (~> 1.0.2)
+    rMeetup (1.0)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -104,6 +105,8 @@ GEM
       activesupport (= 3.2.3)
       bundler (~> 1.0)
       railties (= 3.2.3)
+    rails_config (0.3.0)
+      activesupport (>= 3.0)
     railties (3.2.3)
       actionpack (= 3.2.3)
       activesupport (= 3.2.3)
@@ -162,7 +165,9 @@ DEPENDENCIES
   jquery-rails
   mysql2
   prawn
+  rMeetup
   rails (= 3.2.3)
+  rails_config
   rqrcode_png
   sass-rails (~> 3.2.3)
   simple_form

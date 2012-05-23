@@ -1,9 +1,14 @@
 Singularity::Application.routes.draw do
+  resources :entrants
+
   resources :people
+
 
   resources :humen
 
   resources :events
+  match '/events/:id/rsvpimport', :controller => :events, :action => :rsvpimport
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

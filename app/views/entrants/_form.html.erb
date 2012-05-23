@@ -1,0 +1,11 @@
+
+
+<%= simple_form_for @entrant do |f| %>
+  <%= f.input :name %>
+  <%= f.input :response %>
+  <%= f.association :event %>
+  <%= f.association :person %>
+
+  <%= f.button :submit %>
+<% end %>
+
