@@ -1,3 +1,10 @@
+<%= form_tag people_path, method: :get do %>
+  <p>
+    <%= text_field_tag :query, params[:query] %>
+    <%= submit_tag "Search", name: nil %>
+  </p>
+<% end %>
+
 <h1>Listing people</h1>
 
 <table>
@@ -24,8 +31,6 @@
     <td><%= person.meetup_url %></td>
     <td><%= person.avatar %></td>
     <td><%= link_to 'Show', person %></td>
-    <td><%= link_to 'Edit', edit_person_path(person) %></td>
-    <td><%= link_to 'Destroy', person, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>

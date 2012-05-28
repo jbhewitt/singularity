@@ -21,6 +21,16 @@ class EntrantsController < ApplicationController
     end
   end
 
+ def print_badge
+    @entrant = Entrant.find(params[:id])
+
+    @entrant.delay.print_badge
+
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+  end
+
   # GET /entrants/new
   # GET /entrants/new.json
   def new

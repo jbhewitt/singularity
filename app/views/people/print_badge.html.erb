@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<h1>PRINTING BADGE YO</h1>
 <p>
   <b>Name:</b>
   <%= @person.name %>
@@ -39,3 +40,6 @@
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
+
+<pre>Page Rendered in <%= sprintf('%.3f', (Time.now.usec - @start_time).abs / 1000000.0) %> seconds</pre>
+

@@ -18,3 +18,5 @@
 config/settings.local.yml
 config/settings/*
 config/environments/*.local.yml
+
+/public/badges/*

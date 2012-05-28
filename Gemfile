@@ -14,12 +14,14 @@ gem 'rqrcode_png'
 gem 'rMeetup'
 
 gem 'carrierwave'
+gem 'mini_magick'
 gem 'simple_form'
 gem 'mysql2'
 gem 'capistrano'
 gem 'chronic'
 gem "rails_config"
-
+gem 'delayed_job_active_record'
+gem 'tire'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -35,6 +37,10 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :development, :test do
+  gem 'itslog'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

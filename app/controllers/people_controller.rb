@@ -1,8 +1,18 @@
 class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
+
+  before_filter :set_start_time
+  def set_start_time
+    @start_time = Time.now.usec
+  end
   def index
-    @people = Person.all
+
+    if params[:query].present?
+      @people = Person.search(params[:query], load: true)
+    else
+      @people = Person.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -80,4 +90,15 @@ class PeopleController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def print_badge
+    @person = Person.find(params[:id])
+    @person.create_badge
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @person }
+    end
+  end
+
 end

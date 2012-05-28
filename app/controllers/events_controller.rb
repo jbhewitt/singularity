@@ -15,6 +15,8 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
 
+    @entrants = Entrant.where(:event_id => @event.id, :response => TRUE)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @event }
@@ -81,28 +83,32 @@ class EventsController < ApplicationController
     end
   end
 
+def print_all_badges
+  @event = Event.find(params[:id])
+
+  @entrants = Entrant.where(:event_id => @event.id, :response => TRUE)
+
+  respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @event }
+  end
+
+  @entrants = Entrant.where(:event_id => @event.id, :response => TRUE)
+
+  @entrants.each do |entrant| 
+    entrant.delay.create_badge
+    #entrant.create_badge
+  end
+end
+  
   def rsvpimport
     @event = Event.find(params[:id])
+    
+    @event.delay.meetup_rsvp_import
+
     respond_to do |format|
       format.html
       format.html # rsvpimport.html.erb
-     end
-
-    RMeetup::Client.api_key = Settings.meetup_api
-    results = RMeetup::Client.fetch(:rsvps,{:event_id => @event.meetup_id })
-    results.each do |result|
-      rsvp = result.rsvp
-      person = Person.find_or_create_by_meetup_id(rsvp['member_id'])
-      person.name = rsvp['name']
-      person.city = rsvp['city']
-      person.state = rsvp['state']
-      person.meetup_url = rsvp['link']
-      person.remote_avatar_url = rsvp['photo_url']
-      ##todo
-      #person.gamername = rsvp['name']
-      #person.avatar = rsvp['photo_url']
-      person.save
     end
   end
-
 end
