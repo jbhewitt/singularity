@@ -1,4 +1,8 @@
 Singularity::Application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+  devise_for :users
+
   resources :entrants
   match '/entrants/:id/print_badge', :controller => :entrants, :action => :print_badge
 

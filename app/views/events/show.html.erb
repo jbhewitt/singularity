@@ -10,12 +10,16 @@
   <%= @event.meetup_id %>
 </p>
 
-<ol>
-<% @entrants.each do |entrant| %>
-  <li><%= entrant.person.name %></li>
+
+
+<%= form_tag entrants_path, method: :get do %>
+  <p>
+    <%= text_field_tag :query, params[:query] %>
+    <%= hidden_field_tag :query_event, @event.meetup_id %>
+    <%= submit_tag "Search", name: nil %>
+  </p>
 <% end %>
-</ol>
 
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
+
 <%= link_to 'Back', events_path %>

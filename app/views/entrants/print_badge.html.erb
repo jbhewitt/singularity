@@ -1,26 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h1>PRINTING BADGE YO</h1>
+<h1>-= PRINTING BADGE =- </h1>
+<h2>Welcome <%= @entrant.person.name%></h2>
+
+<p> Please place label on appropriate body appendage </p>
+
 <p>
-  <b>Name:</b>
+  <%= image_tag('/assets/printer.png') %>
+</p>
+
+<h3>max print count: <%= @entrant.printcount%> of <%= Settings.max_badge_printcount %></h3>
+
+<p>
+  <b>entrant name:</b>
   <%= @entrant.name %>
 </p>
 
-<p>
-  <b>Response:</b>
-  <%= @entrant.response %>
-</p>
-
-<p>
-  <b>Player:</b>
-  <%= @entrant.person_id %>
-</p>
-
-<p>
-  <b>Event:</b>
-  <%= @entrant.event_id %>
-</p>
 
 
-<%= link_to 'Edit', edit_entrant_path(@entrant) %> |
-<%= link_to 'Back', entrants_path %>
+<h1> <%= link_to 'DONE!', :controller => "events", :action => "show", :id => @entrant.event%> </h1>

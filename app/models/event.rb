@@ -27,10 +27,10 @@ class Event < ActiveRecord::Base
       else 
         entrant.response = 0
       end
-      entrant.name = "#{self.name} - #{person.name} - #{rsvp['response']}"
+      entrant.name = "#{person.gamername} | #{person.name} | #{self.meetup_id}"
       entrant.save
     end
-    
+
 
   end
 end

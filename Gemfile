@@ -12,7 +12,7 @@ gem 'barby'
 gem 'prawn'
 gem 'rqrcode_png'
 gem 'rMeetup'
-
+gem 'challonge-api'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'simple_form'
@@ -22,6 +22,11 @@ gem 'chronic'
 gem "rails_config"
 gem 'delayed_job_active_record'
 gem 'tire'
+gem 'rails_admin'
+#gem 'sass-twitter-bootstrap-rails'
+
+gem 'rails-footnotes', '>= 3.7.5.rc4', :group => :development
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -40,6 +45,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'itslog'
+  gem 'pry'
 end
 
 # To use ActiveModel has_secure_password
@@ -56,3 +62,6 @@ end
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+
+gem "devise"

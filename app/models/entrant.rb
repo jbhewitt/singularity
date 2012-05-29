@@ -5,22 +5,26 @@ class Entrant < ActiveRecord::Base
 
   validates_uniqueness_of :person_id, :scope => [:event_id]
 
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
   attr_accessible :event_id, :name, :person_id , :response
 
   def print_badge
-   # if self.badge.empty? 
+  #  if self.badge.nil? 
       self.create_badge
-   # end
-    system ( "lp -d Brother_QL_570 -o media=62mm #{self.badge}" )
+  #  end
+    system ( " lp -d Brother_QL_570 -o media=62mm #{self.badge}" )
+    self.printcount ||= 0
+    self.printcount += 1     
+    self.save
   end
 
  def create_badge
   require 'barby/barcode/code_128' 
   require 'barby/outputter/png_outputter'
   require 'rqrcode_png'
-  badge_id = self.person.meetup_id
-
+  badge_id = "#{self.event.meetup_id}"
   badge_eventname = self.event.name
   badge_fullname = self.person.name
   badge_gamername = self.person.gamername  
@@ -29,18 +33,16 @@ class Entrant < ActiveRecord::Base
   end
   badge_url = self.person.meetup_url
 
-  badge_pdf_filename ="#{Rails.root}/public/badges/#{badge_id}.pdf"
-  badge_qrcode_png = "#{Rails.root}/public/badges/qrcode_#{badge_id}.png"
-  badge_barcode_png = "#{Rails.root}/public/badges/code128b_#{badge_id}.png"
-  badge_avatar = "#{Rails.root}/public/badges/avatar_#{badge_id}.png"
+  badge_pdf_filename ="#{Rails.root}/public/badges/#{badge_id}-#{self.person.meetup_id}.pdf"
+  badge_qrcode_png = "#{Rails.root}/public/badges/qrcode_#{self.person.meetup_id}.png"
+  badge_barcode_png = "#{Rails.root}/public/badges/code128b_#{self.person.meetup_id}.png"
+  badge_avatar = "#{Rails.root}/public/badges/avatar_#{self.person.meetup_id}.png"
 
-  
-
-#    badge_photo = entrant.person.avatar.thumb.current_path
-#    if badge_photo.nil?
-#      badge_photo = "#{Rails.root}/vendor/badge/fuuuu.png"
-#    end
-  
+   badge_avatar = self.person.avatar.current_path
+    if badge_avatar.nil?
+      badge_avatar = "#{Rails.root}/vendor/badge/fuuuu.png"
+    end
+=begin
   if !FileTest.exist?(badge_avatar)
     require 'digest/md5'
     require 'open-uri'
@@ -49,10 +51,10 @@ class Entrant < ActiveRecord::Base
       file << open(vanillicon).read
     end
   end
-  
+=end  
   # barcode
   if !FileTest.exist?(badge_barcode_png)
-    barcode = Barby::Code128B.new(badge_id) 
+    barcode = Barby::Code128B.new(self.person.meetup_id) 
     File.open(badge_barcode_png, 'w'){|f| 
       f.write barcode.to_png(:height => 20, :margin => 5) 
     } 
@@ -84,27 +86,27 @@ class Entrant < ActiveRecord::Base
       grid([1,0], [1,2]).bounding_box do
         font "#{Rails.root}/vendor/badge/Roboto-Bold.ttf"
         text badge_gamername.upcase, :align => :center, :size => 20
+        move_down 5
         text badge_fullname.upcase, :align => :center, :size => 16
         #move_down 10
       end
 
-       grid([2,0], [2,0]).bounding_box do
-        image badge_avatar, :height => 58, :position=> :center
+       grid([2,0], [2,2]).bounding_box do
+        image badge_avatar, :height => 65, :position=> :center
        end
      
       grid([2,1], [2,1]).bounding_box do
-        image "#{Rails.root}/vendor/badge/test.png", :height => 58, :position=> :center
+        #image "#{Rails.root}/vendor/badge/test.png", :height => 58, :position=> :center
       end
             
        grid([2,2], [2,2]).bounding_box do
-        font "#{Rails.root}/vendor/badge/Roboto-Bold.ttf"
-        image badge_qrcode_png, :height => 58, :position=> :center
+#        image badge_qrcode_png, :height => 58, :position=> :center
       #  text 'human', :align => :center
        end
 
        grid([3,0], [3,2]).bounding_box do
             image badge_barcode_png, :position=> :center
-            text badge_id.to_s, :align => :center, :size => 8
+            text badge_id, :align => :center, :size => 8
 
             font "#{Rails.root}/vendor/badge/hancpllp.ttf"
             text "-= SATURDAY =-", :align => :center, :size => 18

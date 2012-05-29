@@ -1,25 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @entrant.name %>
-</p>
+<h1>Are you <%= @entrant.person.name %>?</h1>
 
-<p>
-  <b>Response:</b>
-  <%= @entrant.response %>
-</p>
+<p>answer for great justice</p>
 
-<p>
-  <b>Player:</b>
-  <%= @entrant.person_id %>
-</p>
+<h2><%= link_to "YES! :)", :controller => "entrants", :action => "print_badge", :id => @entrant %></h2>
 
-<p>
-  <b>Event:</b>
-  <%= @entrant.event_id %>
-</p>
+<h2> <%= link_to 'NO :(', :controller => "events", :action => "show", :id => @entrant.event%> </h2>
 
 
-<%= link_to 'Edit', edit_entrant_path(@entrant) %> |
-<%= link_to 'Back', entrants_path %>
+
+  <%= image_tag(@entrant.person.avatar) %>
+
+
+

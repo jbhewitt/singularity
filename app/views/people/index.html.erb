@@ -1,6 +1,7 @@
-<%= form_tag people_path, method: :get do %>
+<%= form_tag entrants_path, method: :get do %>
   <p>
     <%= text_field_tag :query, params[:query] %>
+    <%= hidden_field_tag :query_event, @event.meetup_id %>
     <%= submit_tag "Search", name: nil %>
   </p>
 <% end %>
@@ -11,12 +12,7 @@
   <tr>
     <th>Name</th>
     <th>Gamername</th>
-    <th>Meetup</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Meetup url</th>
     <th>Avatar</th>
-    <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -25,10 +21,6 @@
   <tr>
     <td><%= person.name %></td>
     <td><%= person.gamername %></td>
-    <td><%= person.meetup_id %></td>
-    <td><%= person.city %></td>
-    <td><%= person.state %></td>
-    <td><%= person.meetup_url %></td>
     <td><%= person.avatar %></td>
     <td><%= link_to 'Show', person %></td>
   </tr>
@@ -36,5 +28,3 @@
 </table>
 
 <br />
-
-<%= link_to 'New Person', new_person_path %>

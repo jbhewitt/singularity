@@ -2,7 +2,23 @@ class EntrantsController < ApplicationController
   # GET /entrants
   # GET /entrants.json
   def index
-    @entrants = Entrant.all
+    if params[:query_event]
+      @query_event = params[:query_event]
+    end
+
+    if params[:query].present?
+      #params[:query].pry
+      @entrants = Entrant.search("#{params[:query_event]} AND #{params[:query]}*", load: true, analyze_wildcard: true, auto_generate_phrase_queries: true)
+      
+      if @entrants.total == 1
+        @entrant = @entrants.results[0]
+        render :action => "show"
+        return
+        #@entrant.pry  
+      end
+    else
+      @entrants = Entrant.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,70 +40,13 @@ class EntrantsController < ApplicationController
  def print_badge
     @entrant = Entrant.find(params[:id])
 
-    @entrant.delay.print_badge
+    #@entrant.delay.print_badge
+    @entrant.print_badge
 
     respond_to do |format|
       format.html # show.html.erb
     end
   end
 
-  # GET /entrants/new
-  # GET /entrants/new.json
-  def new
-    @entrant = Entrant.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @entrant }
-    end
-  end
-
-  # GET /entrants/1/edit
-  def edit
-    @entrant = Entrant.find(params[:id])
-  end
-
-  # POST /entrants
-  # POST /entrants.json
-  def create
-    @entrant = Entrant.new(params[:entrant])
-
-    respond_to do |format|
-      if @entrant.save
-        format.html { redirect_to @entrant, notice: 'Entrant was successfully created.' }
-        format.json { render json: @entrant, status: :created, location: @entrant }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @entrant.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /entrants/1
-  # PUT /entrants/1.json
-  def update
-    @entrant = Entrant.find(params[:id])
-
-    respond_to do |format|
-      if @entrant.update_attributes(params[:entrant])
-        format.html { redirect_to @entrant, notice: 'Entrant was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @entrant.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /entrants/1
-  # DELETE /entrants/1.json
-  def destroy
-    @entrant = Entrant.find(params[:id])
-    @entrant.destroy
-
-    respond_to do |format|
-      format.html { redirect_to entrants_url }
-      format.json { head :no_content }
-    end
-  end
+ 
 end
