@@ -14,9 +14,8 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
-
     @entrants = Entrant.where(:event_id => @event.id, :response => TRUE)
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @event }

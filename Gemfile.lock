@@ -44,6 +44,8 @@ GEM
     carrierwave (0.6.2)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
+    challonge-api (0.1.1)
+      activeresource
     chronic (0.6.7)
     chunky_png (1.2.5)
     coderay (1.0.6)
@@ -223,6 +225,7 @@ DEPENDENCIES
   barby
   capistrano
   carrierwave
+  challonge-api
   chronic
   chunky_png
   coffee-rails (~> 3.2.1)

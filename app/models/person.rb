@@ -3,7 +3,7 @@ class Person < ActiveRecord::Base
   has_many :entrants
   has_many :events, :through => :entrants
 
-  attr_accessible :avatar, :city, :gamername, :meetup_id, :meetup_url, :name, :state
+  attr_accessible :avatar, :city, :gamername, :meetup_id, :meetup_url, :name, :state, :avatar_cache
 
   require 'carrierwave/orm/activerecord'
   include Tire::Model::Search

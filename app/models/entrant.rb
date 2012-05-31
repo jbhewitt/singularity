@@ -11,10 +11,10 @@ class Entrant < ActiveRecord::Base
   attr_accessible :event_id, :name, :person_id , :response
 
   def print_badge
-  #  if self.badge.nil? 
+    #if self.badge.nil? 
       self.create_badge
-  #  end
-    system ( " lp -d Brother_QL_570 -o media=62mm #{self.badge}" )
+    #end
+    system ( "lp -d Brother_QL_570 -o media=62mm #{self.badge}" )
     self.printcount ||= 0
     self.printcount += 1     
     self.save
@@ -24,7 +24,7 @@ class Entrant < ActiveRecord::Base
   require 'barby/barcode/code_128' 
   require 'barby/outputter/png_outputter'
   require 'rqrcode_png'
-  badge_id = "#{self.event.meetup_id}"
+  badge_id = "#{self.person.meetup_id}"
   badge_eventname = self.event.name
   badge_fullname = self.person.name
   badge_gamername = self.person.gamername  
@@ -33,7 +33,7 @@ class Entrant < ActiveRecord::Base
   end
   badge_url = self.person.meetup_url
 
-  badge_pdf_filename ="#{Rails.root}/public/badges/#{badge_id}-#{self.person.meetup_id}.pdf"
+  badge_pdf_filename ="#{Rails.root}/public/badges/#{self.person.meetup_id}-#{badge_id}.pdf"
   badge_qrcode_png = "#{Rails.root}/public/badges/qrcode_#{self.person.meetup_id}.png"
   badge_barcode_png = "#{Rails.root}/public/badges/code128b_#{self.person.meetup_id}.png"
   badge_avatar = "#{Rails.root}/public/badges/avatar_#{self.person.meetup_id}.png"
@@ -73,51 +73,46 @@ class Entrant < ActiveRecord::Base
                               :margin => 10,
                              :page_size   => [62*(72 / 25.4),100*(72 / 25.4)]
     ) do
-      define_grid(:columns => 3, :rows => 4)
-
-      grid([0,0], [0,2]).bounding_box do
-        font "#{Rails.root}/vendor/badge/hancpllp.ttf"
-        text badge_eventname, :align => :center,  :size => 16
-        image "#{Rails.root}/vendor/badge/ls-logo.png", :height => 40, :position=> :center
-        #move_down 10
-      end
-
-
-      grid([1,0], [1,2]).bounding_box do
-        font "#{Rails.root}/vendor/badge/Roboto-Bold.ttf"
-        text badge_gamername.upcase, :align => :center, :size => 20
-        move_down 5
-        text badge_fullname.upcase, :align => :center, :size => 16
-        #move_down 10
-      end
-
-       grid([2,0], [2,2]).bounding_box do
-        image badge_avatar, :height => 65, :position=> :center
-       end
-     
-      grid([2,1], [2,1]).bounding_box do
-        #image "#{Rails.root}/vendor/badge/test.png", :height => 58, :position=> :center
-      end
+            font "#{Rails.root}/vendor/badge/hancpllp.ttf"
+            text badge_eventname, :align => :center,  :size => 16
             
-       grid([2,2], [2,2]).bounding_box do
-#        image badge_qrcode_png, :height => 58, :position=> :center
-      #  text 'human', :align => :center
-       end
+            image "#{Rails.root}/vendor/badge/ls-logo.png", :height => 40, :position=> :center
+            
+            font "#{Rails.root}/vendor/badge/FUTURAMC.TTF"
+          
+            #8 = 50
+            #10 = 35
+            #13 = 30
+            #16 = 24
+            #20 = 20
 
-       grid([3,0], [3,2]).bounding_box do
+
+            if badge_gamername.length < 8
+              gamername_textsize = 45
+            elsif badge_gamername.length < 15
+              gamername_textsize = 30
+            else
+              gamername_textsize = 20
+            end
+
+      
+            text badge_gamername.upcase, :align => :center, :size => gamername_textsize
+            text badge_fullname.upcase, :align => :center, :size => 20
+            
+            #image badge_avatar, :height => 65, :position=> :center
+            image badge_qrcode_png, :height => 70, :position=> :center
             image badge_barcode_png, :position=> :center
             text badge_id, :align => :center, :size => 8
 
-            font "#{Rails.root}/vendor/badge/hancpllp.ttf"
-            text "-= SATURDAY =-", :align => :center, :size => 18
-       end
-         grid([4,0], [4,2]).bounding_box do
-       end
-      end
+            #font "#{Rails.root}/vendor/badge/hancpllp.ttf"
+            #text "-= SATURDAY =-", :align => :center, :size => 18
+    end
 
   self.badge = badge_pdf_filename
   self.save
   
   end
+
+
 
 end
