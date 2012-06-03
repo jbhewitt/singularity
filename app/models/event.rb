@@ -17,14 +17,19 @@ class Event < ActiveRecord::Base
     results = RMeetup::Client.fetch(:rsvps,{:event_id => self.meetup_id })
     results.each do |result|
       rsvp = result.rsvp
+      #rsvp.pry
       person = Person.find_or_create_by_meetup_id(rsvp['member_id'])
       person.name = rsvp['name']
       person.city = rsvp['city']
       person.state = rsvp['state']
       person.meetup_url = rsvp['link']
       person.remote_avatar_url = rsvp['photo_url']
-      ##todo
-      person.gamername = rsvp['answers'][1]
+
+      gamername = rsvp['answers'][1]
+      if gamername == false
+        person.gamername = gamername
+      end
+      
       person.save
 
       #entrant

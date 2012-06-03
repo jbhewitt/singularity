@@ -1,0 +1,18 @@
+
+
+<h1>TOKEN LOGIN</h1>
+
+<h2 id="notice"><%= notice %></h2>
+
+
+<h3<%= SecureRandom.urlsafe_base64(6).pry %></h3>
+
+<%= form_tag tokens_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :token_login, params[:token_login] %>
+    <%= submit_tag "LOGIN", :name => nil %>
+  </p>
+<% end %>
+
+
+<br />

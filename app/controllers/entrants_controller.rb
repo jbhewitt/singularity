@@ -2,6 +2,10 @@ class EntrantsController < ApplicationController
   # GET /entrants
   # GET /entrants.json
   def index
+    if session['active_yeaaa'] == false       
+      redirect_to :controller=>'tokens', :action => 'index'
+    end
+
     if params[:query_event]
       @query_event = params[:query_event]
     end
@@ -31,10 +35,7 @@ class EntrantsController < ApplicationController
   def show
     @entrant = Entrant.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @entrant }
-    end
+    redirect_with_delay '/tokens', 4 
   end
 
  def print_badge
@@ -42,10 +43,14 @@ class EntrantsController < ApplicationController
 
     #@entrant.delay.print_badge
     @entrant.print_badge
+    
+    session['active_yeaaa'] = false 
+    
+    #respond_to do |format|
+    #  format.html # show.html.erb
+    #end
+    redirect_with_delay '/tokens', 4 
 
-    respond_to do |format|
-      format.html # show.html.erb
-    end
   end
 
  

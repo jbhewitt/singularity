@@ -10,11 +10,12 @@ Singularity::Application.routes.draw do
   match '/people/:id/print_badge', :controller => :people, :action => :print_badge
 
 
-  resources :humen
-
   resources :events
   match '/events/:id/rsvpimport', :controller => :events, :action => :rsvpimport
   match '/events/:id/print_all_badges', :controller => :events, :action => :print_all_badges
+
+  resources :tokens
+
 
 
   # The priority is based upon order of creation:

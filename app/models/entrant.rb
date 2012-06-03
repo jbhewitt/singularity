@@ -18,12 +18,14 @@ class Entrant < ActiveRecord::Base
     self.printcount ||= 0
     self.printcount += 1     
     self.save
+    #reset session
   end
 
  def create_badge
   require 'barby/barcode/code_128' 
   require 'barby/outputter/png_outputter'
   require 'rqrcode_png'
+
   badge_id = "#{self.person.meetup_id}"
   badge_eventname = self.event.name
   badge_fullname = self.person.name
@@ -69,48 +71,46 @@ class Entrant < ActiveRecord::Base
     } 
   end
 
-    Prawn::Document.generate(badge_pdf_filename,
-                              :margin => 10,
-                             :page_size   => [62*(72 / 25.4),100*(72 / 25.4)]
-    ) do
-            font "#{Rails.root}/vendor/badge/hancpllp.ttf"
-            text badge_eventname, :align => :center,  :size => 16
-            
-            image "#{Rails.root}/vendor/badge/ls-logo.png", :height => 40, :position=> :center
-            
-            font "#{Rails.root}/vendor/badge/FUTURAMC.TTF"
-          
-            #8 = 50
-            #10 = 35
-            #13 = 30
-            #16 = 24
-            #20 = 20
-
-
-            if badge_gamername.length < 8
-              gamername_textsize = 45
-            elsif badge_gamername.length < 15
-              gamername_textsize = 30
-            else
-              gamername_textsize = 20
-            end
-
+  Prawn::Document.generate(badge_pdf_filename,
+                            :margin => 10,
+                           :page_size   => [62*(72 / 25.4),100*(72 / 25.4)]
+  ) do
+      font "#{Rails.root}/vendor/badge/hancpllp.ttf"
+      text badge_eventname, :align => :center,  :size => 16
       
-            text badge_gamername.upcase, :align => :center, :size => gamername_textsize
-            text badge_fullname.upcase, :align => :center, :size => 20
-            
-            #image badge_avatar, :height => 65, :position=> :center
-            image badge_qrcode_png, :height => 70, :position=> :center
-            image badge_barcode_png, :position=> :center
-            text badge_id, :align => :center, :size => 8
+      image "#{Rails.root}/vendor/badge/ls-logo.png", :height => 40, :position=> :center
+      
+      font "#{Rails.root}/vendor/badge/FUTURAMC.TTF"
+    
+      #8 = 50
+      #10 = 35
+      #13 = 30
+      #16 = 24
+      #20 = 20
 
-            #font "#{Rails.root}/vendor/badge/hancpllp.ttf"
+
+      if badge_gamername.length < 8
+        gamername_textsize = 45
+      elsif badge_gamername.length < 15
+        gamername_textsize = 30
+      else
+        gamername_textsize = 20
+      end
+
+
+      text badge_gamername.upcase, :align => :center, :size => gamername_textsize
+      text badge_fullname.upcase, :align => :center, :size => 20
+      
+      #image badge_avatar, :height => 65, :position=> :center
+      image badge_qrcode_png, :height => 70, :position=> :center
+      image badge_barcode_png, :position=> :center
+      text badge_id, :align => :center, :size => 8
+
+      #font "#{Rails.root}/vendor/badge/hancpllp.ttf"
             #text "-= SATURDAY =-", :align => :center, :size => 18
     end
-
-  self.badge = badge_pdf_filename
-  self.save
-  
+    self.badge = badge_pdf_filename
+    self.save  
   end
 
 
