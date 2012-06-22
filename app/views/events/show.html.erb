@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Type in your name or gamername!</h1>
 <p>
   <b>Name:</b>
   <%= @event.name %>
@@ -14,7 +15,7 @@
 
 <%= form_tag entrants_path, method: :get do %>
   <p>
-    <%= text_field_tag :query, params[:query] %>
+    <%= text_field_tag :query, params[:query], :autofocus => true %>
     <%= hidden_field_tag :query_event, @event.meetup_id %>
     <%= submit_tag "Search", name: nil %>
   </p>

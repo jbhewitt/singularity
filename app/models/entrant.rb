@@ -31,7 +31,7 @@ class Entrant < ActiveRecord::Base
   badge_fullname = self.person.name
   badge_gamername = self.person.gamername  
   if badge_gamername.nil?
-    badge_gamername = ' '
+    badge_gamername = badge_fullname
   end
   badge_url = self.person.meetup_url
 
@@ -87,7 +87,6 @@ class Entrant < ActiveRecord::Base
       #13 = 30
       #16 = 24
       #20 = 20
-
 
       if badge_gamername.length < 8
         gamername_textsize = 45

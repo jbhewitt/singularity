@@ -14,6 +14,7 @@ class Event < ActiveRecord::Base
   def meetup_rsvp_import
     ##<RMeetup::Type::Rsvp:0x007fe98a0d09a0 @rsvp={"zip"=>"meetup3", "lon"=>"153.02000427246094", "photo_url"=>"", "link"=>"http://www.meetup.com/members/48721402", "state"=>"", "answers"=>["Yes", "Waistless"], "guests"=>"0", "event_id"=>28049331, "member_id"=>48721402, "city"=>"Brisbane", "country"=>"au", "response"=>"yes", "coord"=>"-27.459999084472656", "id"=>"48721402", "updated"=>"Tue May 22 10:43:43 EDT 2012", "created"=>"Tue May 22 10:43:43 EDT 2012", "name"=>"Waistless", "comment"=>""}>
     RMeetup::Client.api_key = Settings.meetup_api
+    #Settings.meetup_api.pry
     results = RMeetup::Client.fetch(:rsvps,{:event_id => self.meetup_id })
     results.each do |result|
       rsvp = result.rsvp

@@ -35,7 +35,7 @@ class EntrantsController < ApplicationController
   def show
     @entrant = Entrant.find(params[:id])
 
-    redirect_with_delay '/tokens', 4 
+#    redirect_with_delay '/tokens', 4 
   end
 
  def print_badge
@@ -49,7 +49,8 @@ class EntrantsController < ApplicationController
     #respond_to do |format|
     #  format.html # show.html.erb
     #end
-    redirect_with_delay '/tokens', 4 
+    redirect_with_delay '/tokens', 4
+    return
 
   end
 

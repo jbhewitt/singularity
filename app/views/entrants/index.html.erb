@@ -1,3 +1,7 @@
+<h1>Find yourself! </h1>
+<h3>name or gamername...</h3>
+<br/>
+
 <%= form_tag entrants_path, method: :get do %>
   <p>
     <%= text_field_tag :query, params[:query] %>
@@ -7,8 +11,6 @@
 <% end %>
 
 
-
-<h1>Find yourself!</h1>
 <% @entrants.each do |entrant| %>
     <%= link_to (entrant) do %>
       <h3><%= entrant.person.name %> - <%= entrant.person.name %></h3>

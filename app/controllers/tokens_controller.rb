@@ -1,7 +1,7 @@
 class TokensController < ApplicationController
   def index
     if params[:token_login] 
-      if @token = Token.find_by_name(params[:token_login])
+      if @token = Token.find_by_name(params[:token_login].upcase)
         
         if @token.used
           flash[:notice] = 'ERROR ALREADY USED THIS ONE!?'
@@ -11,6 +11,7 @@ class TokensController < ApplicationController
           session['active_yeaaa'] = true
           #redirect_to @token
           redirect_to :controller=>'events', :action => 'show', :id => Settings.active_event
+          return
 
           return
         end

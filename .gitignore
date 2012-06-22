@@ -19,6 +19,7 @@ config/settings.local.yml
 config/settings/*
 config/environments/*.local.yml
 
+/public/tokens/*
 /public/badges/*.*
 public/badges/1250203.pdf
 public/badges/5441566.pdf

@@ -9,7 +9,7 @@ gem 'sqlite3'
 
 gem 'chunky_png'
 gem 'barby'
-gem 'prawn'
+gem 'prawn', "~> 1.0.0.rc1"
 gem 'rqrcode_png'
 gem 'rMeetup'
 gem 'challonge-api'
@@ -55,10 +55,10 @@ end
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'

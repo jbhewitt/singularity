@@ -43,11 +43,9 @@ end
   
   def rsvpimport
     @event = Event.find(params[:id])
-    
-    
+        
     #@event.delay.meetup_rsvp_import
     @event.meetup_rsvp_import
-
 
     respond_to do |format|
       format.html
