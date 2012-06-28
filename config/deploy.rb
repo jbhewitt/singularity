@@ -1,5 +1,5 @@
 #require ‘bundler/capistrano’
-set :rvm_type, :system  # Copy the exact line. I really mean :system here
+require "rvm/capistrano"                               # Load RVM's capistrano plugin.
 before 'deploy:setup', 'rvm:install_rvm'
 
 set :application, "singularity"
