@@ -17,6 +17,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'simple_form'
 gem 'mysql2'
+gem 'rvm-capistrano'
 gem 'capistrano'
 gem 'chronic'
 gem "rails_config"

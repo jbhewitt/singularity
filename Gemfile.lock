@@ -180,6 +180,8 @@ GEM
       chunky_png
       rqrcode
     ruby-rc4 (0.1.5)
+    rvm-capistrano (1.2.2)
+      capistrano (>= 2.0.0)
     sass (3.1.18)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -249,6 +251,7 @@ DEPENDENCIES
   rails_admin
   rails_config
   rqrcode_png
+  rvm-capistrano
   sass-rails (~> 3.2.3)
   simple_form
   sqlite3
