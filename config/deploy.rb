@@ -30,10 +30,11 @@ after 'deploy:update_code', 'deploy:symlink_uploads'
 
 namespace :deploy do
 	task :symlink_uploads do
-		run "ln -nfs #{shared_path}/config/settings  #{release_path}/rails/config/settings"
-		run "ln -nfs #{shared_path}/public/tokens  #{release_path}/rails//public/tokens"
-		run "ln -nfs #{shared_path}/public/uploads  #{release_path}/rails//public/uploads"
-		run "ln -nfs #{shared_path}/public/badges  #{release_path}/rails//public/badges"
+		run "ln -nfs #{shared_path}/config/settings  #{release_path}/config/settings"
+		run "ln -nfs #{shared_path}/public/tokens  #{release_path}/public/tokens"
+		run "ln -nfs #{shared_path}/public/uploads  #{release_path}/public/uploads"
+		run "ln -nfs #{shared_path}/public/badges  #{release_path}/public/badges"
+		run "ln -nfs #{shared_path}/config/database.yml  #{release_path}/config/database.yml"
 	end
 end
 
