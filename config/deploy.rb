@@ -26,6 +26,7 @@ ssh_options[:compression] = "none"
 
 
 after 'deploy:update_code', 'deploy:symlink_uploads'
+#after 'deploy:update_code', 'deploy:asset_compile'
 
 
 namespace :deploy do
@@ -35,6 +36,10 @@ namespace :deploy do
 		run "ln -nfs #{shared_path}/public/uploads  #{release_path}/public/uploads"
 		run "ln -nfs #{shared_path}/public/badges  #{release_path}/public/badges"
 		run "ln -nfs #{shared_path}/config/database.yml  #{release_path}/config/database.yml"
+	end
+
+	task :asset_compile do
+		run "rvm_path=$HOME/.rvm/ $HOME/.rvm/bin/rvm-shell 'ruby-1.9.3-p194' -c 'cd #{release_path} && rake RAILS_ENV=production RAILS_GROUPS=assets assets:precompile'"
 	end
 end
 
