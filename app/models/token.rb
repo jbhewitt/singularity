@@ -20,7 +20,7 @@ class Token < ActiveRecord::Base
     #system ( "lp -d Brother_QL_570 -o media=62mm #{self.pdf}" )
     self.printed = true
     self.save
-    #return self
+    # return self
   end
 
   def create_print

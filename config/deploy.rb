@@ -25,6 +25,14 @@ ssh_options[:forward_agent] = true
 ssh_options[:compression] = "none"
 
 
+task :symlink_uploads do
+	run "ln -nfs #{shared_path}/config/settings  #{release_path}/rails/config/settings"
+	run "ln -nfs #{shared_path}/public/tokens  #{release_path}/rails//public/tokens"
+	run "ln -nfs #{shared_path}/public/uploads  #{release_path}/rails//public/uploads"
+	run "ln -nfs #{shared_path}/public/badges  #{release_path}/rails//public/badges"
+end
+
+after 'deploy:update_code', 'deploy:symlink_uploads'
 
 # if you want to clean up old releases on each deploy uncomment this:
 # after "deploy:restart", "deploy:cleanup"
