@@ -11,9 +11,9 @@ set :branch, "master"
 set :rvm_type, :user
 set :rvm_ruby_string, '1.9.3'
  
-role :web, "apps.stcpl.com.au"                          # Your HTTP server, Apache/etc
-role :app, "apps.stcpl.com.au"                          # This may be the same as your `Web` server
-role :db,  "apps.stcpl.com.au", :primary => true # This is where Rails migrations will run
+role :web, "apps.ls"                          # Your HTTP server, Apache/etc
+role :app, "apps.ls"                          # This may be the same as your `Web` server
+role :db,  "apps.ls", :primary => true # This is where Rails migrations will run
 
 
 set :user, "singularity"

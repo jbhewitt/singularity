@@ -1,12 +1,24 @@
 namespace :meetup do
   desc "TODO"
 
+  task :gen_badges => :environment do |t, args|
+    args.with_defaults(:event_id => 0)       
+    if args.event_id == 0 
+      event = Event.last
+    else      
+      event = Event.find_by_meetup_id(args.event_id)
+    end
+
+    entrants = Entrant.where(:event_id => event.id, :badge => nil)
+    entrants.each do |entrant|
+      puts "Generating badge for #{entrant.name}"
+      entrant.create_badge
+    end
+  end
   task :profile_import => :environment  do
     puts '-= importing all user profiles! =-'
     RMeetup::Client.api_key = Settings.meetup_api
-    RMeetup::Client.api_key = 'b2c5048751f552f793b20352b261743'
 
-    
     results = RMeetup::Client.fetch(:members,{:group_urlname => 'LanSmash' })
     #results.pry
     results.each do |result|
@@ -18,18 +30,22 @@ namespace :meetup do
       person.meetup_url = member['link']
       person.remote_avatar_url = member['photo_url']
 
-#      gamername = member['answers'][1]
-#      if gamername == false
-#        person.gamername = gamername
-#      end
+      gamername = member['answers'][1]
+      if gamername == false
+        person.gamername = gamername
+      end
       person.save
 
       puts "imported #{person.name}"
     end
   end
   task :rsvp_import => :environment do |t, args|
-    args.with_defaults(:event_id => "28049331")       
-    event = Event.find_by_meetup_id(args.event_id)
+    args.with_defaults(:event_id => 0)       
+    if args.event_id == 0 
+      event = Event.last
+    else      
+      event = Event.find_by_meetup_id(args.event_id)
+    end
     #event.pry
 
     puts "importing rsvps for #{event.name}!"
@@ -47,7 +63,7 @@ namespace :meetup do
       person.remote_avatar_url = rsvp['photo_url']
 
       gamername = rsvp['answers'][1]
-      if gamername == false
+      if person.gamername.nil?
         person.gamername = gamername
       end
       

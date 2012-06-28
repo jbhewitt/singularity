@@ -11,9 +11,9 @@ class Entrant < ActiveRecord::Base
   attr_accessible :event_id, :name, :person_id , :response
 
   def print_badge
-    #if self.badge.nil? 
+    if self.badge.nil? 
       self.create_badge
-    #end
+    end
     system ( "lp -d Brother_QL_570 -o media=62mm #{self.badge}" )
     self.printcount ||= 0
     self.printcount += 1     
