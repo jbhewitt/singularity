@@ -9,7 +9,7 @@ set :repository, "https://github.com/jbhewitt/singularity.git"
 set :branch, "master"
 
 set :rvm_type, :user
-#set :rvm_ruby_string, 'ruby-1.9.3-p125'
+set :rvm_ruby_string, 'ruby-1.9.3-p125'
  
 role :web, "apps.ls"                          # Your HTTP server, Apache/etc
 role :app, "apps.ls"                          # This may be the same as your `Web` server
