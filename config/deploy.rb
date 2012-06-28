@@ -15,12 +15,10 @@ role :web, "apps.ls"                          # Your HTTP server, Apache/etc
 role :app, "apps.ls"                          # This may be the same as your `Web` server
 role :db,  "apps.ls", :primary => true # This is where Rails migrations will run
 
-
 set :user, "singularity"
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
-
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
